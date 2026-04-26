@@ -9,6 +9,7 @@ export type Project = {
   videoSrc: string
   orientation: 'horizontal' | 'vertical'   // ← AJOUTE CETTE LIGNE
   startTime?: number
+  heroDuration?: number
   year: string
   description?: string
 }
