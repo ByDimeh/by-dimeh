@@ -20,7 +20,7 @@ export const projects: Project[] = [
     number: '01',
     title: 'Les Ardentes × Alonzo',
     client: 'Alonzo',
-    category: 'Concerts',
+    category: 'concerts',
     categoryLabel: 'Concerts',
     tag: 'Concerts',
     videoSrc: '/videos/V2_ALONZO_ARDENTES.mp4',
