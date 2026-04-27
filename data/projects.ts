@@ -3,11 +3,11 @@ export type Project = {
   number: string
   title: string
   client: string
-  category: 'clips' | 'brand' | 'fashion' | 'pub' | 'editorial' | 'concerts' | 'sports'
+  category: 'clips' | 'brand' | 'fashion' | 'pub' | 'editorial' | 'concerts' | 'sports' | 'lifestyle'
   categoryLabel: string
   tag: string
   videoSrc: string
-  orientation: 'horizontal' | 'vertical'   // ← AJOUTE CETTE LIGNE
+  orientation: 'horizontal' | 'vertical'
   startTime?: number
   heroDuration?: number
   year: string
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     startTime: 25,
     orientation: 'vertical',
     year: '2024',
-    description: 'Réalisation d\'un vlog avec Alonzo au festival Les Ardentes 2024',
+    description: `Réalisation d'un vlog avec Alonzo au festival Les Ardentes 2024.`,
   },
   {
     slug: 'om-3rd-jersey',
@@ -39,9 +39,9 @@ export const projects: Project[] = [
     tag: 'Brand',
     videoSrc: '/videos/REVEAL_3RD_JERSEY_OM.mp4',
     startTime: 25,
-     orientation: 'vertical',
+    orientation: 'vertical',
     year: '2024',
-    description: 'Film de révélation du 3e maillot de l\'Olympique de Marseille 2023/2024',
+    description: `Film de révélation du 3e maillot de l'Olympique de Marseille 2023/2024.`,
   },
   {
     slug: 'gertrude-capsule',
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     startTime: 0,
     orientation: 'vertical',
     year: '2024',
-    description: 'Fashion film pour la capsule collection Gertrude.',
+    description: `Fashion film pour la capsule collection Gertrude.`,
   },
   {
     slug: 'crocs-campaign',
@@ -69,7 +69,7 @@ export const projects: Project[] = [
     startTime: 27,
     orientation: 'vertical',
     year: '2024',
-    description: 'Campagne publicitaire pour l\'édition Crocs Marseille.',
+    description: `Campagne publicitaire pour l'édition Crocs Marseille.`,
   },
   {
     slug: 'projet-cinematique',
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     startTime: 13,
     orientation: 'vertical',
     year: '2024',
-    description: 'A performance-driven silhouette built for running and so much more',
+    description: `A performance-driven silhouette built for running and so much more.`,
   },
   {
     slug: 'vrk-cebe',
@@ -97,9 +97,9 @@ export const projects: Project[] = [
     startTime: 6,
     orientation: 'vertical',
     year: '2024',
-    description: 'Film lifestyle pour la collaboration VRK × Cébé.',
+    description: `Film lifestyle pour la collaboration VRK × Cébé.`,
   },
-{
+  {
     slug: 'stony-stone-makelele',
     number: '07',
     title: 'Makélélé',
@@ -113,8 +113,7 @@ export const projects: Project[] = [
     year: '2025',
     description: `Direction et réalisation du clip Makélélé pour Stony Stone.`,
   },
-
-{
+  {
     slug: 'saison-shop-adizero-evo-sl',
     number: '08',
     title: 'Adizero Evo SL',
@@ -128,8 +127,7 @@ export const projects: Project[] = [
     year: '2025',
     description: `Brand film pour la collaboration Adidas × Saison Shop autour de la Adizero Evo SL.`,
   },
-
-{
+  {
     slug: 'family-lacoste-la-victoire',
     number: '09',
     title: 'Lacoste × Family 3.0 - La Victoire',
@@ -141,15 +139,14 @@ export const projects: Project[] = [
     orientation: 'vertical',
     startTime: 34,
     year: '2025',
-    description: `Publicité pour la collection Lacoste en hommage à René Lacoste et sa victoire en 1924`,
+    description: `Publicité pour la collection Lacoste en hommage à René Lacoste et sa victoire en 1924.`,
   },
-
-{
+  {
     slug: 'alonzo-velodrome-2025',
     number: '10',
     title: 'Vieux Port, J.O 2024',
     client: 'Alonzo',
-    category: 'concert',
+    category: 'concerts',
     categoryLabel: 'Concert',
     tag: 'Concert',
     videoSrc: '/videos/ALONZO_VEL_1920x1080.mp4',
@@ -158,8 +155,7 @@ export const projects: Project[] = [
     year: '2024',
     description: `Film d'annonce du concert d'Alonzo au Stade Vélodrome de Marseille, en marge d'un concert dédié aux Jeux Olympiques 2024, sur le Vieux Port de Marseille devant plus de 100 000 personnes, mixé avec d'autres images de sa tournée.`,
   },
-
-{
+  {
     slug: 'stony-stone-zamdane-20-ans',
     number: '11',
     title: '20 ans',
@@ -173,13 +169,12 @@ export const projects: Project[] = [
     year: '2025',
     description: `Opérateur caméra sur le clip "20 ans" de Stony Stone featuring Zamdane.`,
   },
-
-{
+  {
     slug: 'striker-league-mma-2025',
     number: '12',
     title: 'Striker League MMA 2025',
     client: 'Striker League',
-    category: 'sport',
+    category: 'sports',
     categoryLabel: 'Sport',
     tag: 'Sport',
     videoSrc: '/videos/STRIKERLEAGUE_MMA.mp4',
