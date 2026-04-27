@@ -1,27 +1,29 @@
 'use client'
 
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useState } from 'react'
 import type { Project } from '@/data/projects'
 
 export function ProjectRow({ project }: { project: Project }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [hover, setHover] = useState(false)
 
-  const onEnter = () => {
-    videoRef.current?.play().catch(() => {})
-  }
-  const onLeave = () => {
-    if (videoRef.current) {
-      videoRef.current.pause()
-      videoRef.current.currentTime = 0
-    }
-  }
+  const vimeoSrc = (() => {
+    const params = new URLSearchParams({
+      autoplay: '1',
+      muted: '1',
+      loop: '1',
+      background: '1',
+      controls: '0',
+    })
+    if (project.vimeoHash) params.set('h', project.vimeoHash)
+    return `https://player.vimeo.com/video/${project.vimeoId}?${params.toString()}${project.startTime ? `#t=${project.startTime}s` : ''}`
+  })()
 
   return (
     <Link
       href={`/projets/${project.slug}`}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       className="group relative grid grid-cols-[3rem_1fr_28vw] items-center gap-0 px-6 lg:px-10 h-[7.5rem] border-b border-border overflow-hidden transition-colors"
     >
       {/* Hover background */}
@@ -43,17 +45,20 @@ export function ProjectRow({ project }: { project: Project }) {
       </div>
 
       {/* Video preview */}
-      <div className="relative h-full overflow-hidden my-3">
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="w-full h-full object-cover brightness-80 opacity-0 scale-105 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-        >
-          <source src={project.videoSrc} type="video/mp4" />
-        </video>
+      <div className="relative h-full overflow-hidden my-3 bg-black">
+        {hover && (
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260%] h-[260%]">
+              <iframe
+                src={vimeoSrc}
+                className="absolute inset-0 w-full h-full pointer-events-none brightness-90"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+                frameBorder="0"
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tag */}

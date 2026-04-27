@@ -8,41 +8,27 @@ const DEFAULT_DURATION = 10000
 export function Hero({ projects }: { projects: Project[] }) {
   const [idx, setIdx] = useState(0)
   const [fading, setFading] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
 
   const current = projects[idx]
 
-  // ── Charge la vidéo et démarre au startTime
-  useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
+  // URL Vimeo avec autoplay, mute, loop background
+  const vimeoSrc = (() => {
+    const params = new URLSearchParams({
+      autoplay: '1',
+      muted: '1',
+      loop: '1',
+      background: '1',
+      controls: '0',
+      title: '0',
+      byline: '0',
+      portrait: '0',
+    })
+    if (current.vimeoHash) params.set('h', current.vimeoHash)
+    return `https://player.vimeo.com/video/${current.vimeoId}?${params.toString()}${current.startTime ? `#t=${current.startTime}s` : ''}`
+  })()
 
-    const startAt = current.startTime ?? 0
-
-    const onLoaded = () => {
-      v.currentTime = startAt
-      v.play().catch(() => {})
-    }
-
-    // Si la vidéo arrive à sa fin, on revient au startTime
-    const onEnded = () => {
-      v.currentTime = startAt
-      v.play().catch(() => {})
-    }
-
-    v.addEventListener('loadedmetadata', onLoaded)
-    v.addEventListener('ended', onEnded)
-
-    if (v.readyState >= 1) onLoaded()
-
-    return () => {
-      v.removeEventListener('loadedmetadata', onLoaded)
-      v.removeEventListener('ended', onEnded)
-    }
-  }, [current])
-
-  // ── Rotation automatique entre projets
+  // Rotation automatique
   useEffect(() => {
     const projectDuration = (current.heroDuration ?? DEFAULT_DURATION / 1000) * 1000
 
@@ -78,24 +64,20 @@ export function Hero({ projects }: { projects: Project[] }) {
 
   return (
     <section id="hero" className="relative w-screen h-screen overflow-hidden">
-      <video
-        ref={videoRef}
-        key={current.videoSrc}
-        muted
-        playsInline
-        className={`absolute inset-0 w-full h-full object-cover brightness-[0.72] transition-opacity duration-700 ${
-          fading ? 'opacity-0' : 'opacity-100'
-        }`}
-      >
-        <source src={current.videoSrc} type="video/mp4" />
-      </video>
+      <div className={`absolute inset-0 transition-opacity duration-700 overflow-hidden ${fading ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[125vw] h-[125vh] max-w-none">
+          <iframe
+            key={current.vimeoId}
+            src={vimeoSrc}
+            className="absolute inset-0 w-full h-full pointer-events-none brightness-[0.72]"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            frameBorder="0"
+          />
+        </div>
+      </div>
 
-      <div
-        ref={progressRef}
-        className="absolute bottom-0 left-0 h-[2px] bg-foreground z-[4]"
-        style={{ width: '0%' }}
-        aria-hidden="true"
-      />
+      <div ref={progressRef} className="absolute bottom-0 left-0 h-[2px] bg-foreground z-[4]" style={{ width: '0%' }} aria-hidden="true" />
 
       <div className="absolute bottom-0 left-0 right-0 z-[3] p-6 lg:p-10 flex justify-between items-end bg-gradient-to-t from-background/85 to-transparent">
         <div>
@@ -108,8 +90,7 @@ export function Hero({ projects }: { projects: Project[] }) {
         </div>
         <div className="font-mono text-[0.6rem] tracking-[0.14em] text-muted-foreground text-right flex flex-col items-end gap-2 uppercase">
           <span className="text-sm text-foreground">
-            {String(idx + 1).padStart(2, '0')} /{' '}
-            {String(projects.length).padStart(2, '0')}
+            {String(idx + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
           </span>
           <span>Showreel 2025</span>
         </div>

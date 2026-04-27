@@ -33,8 +33,8 @@ export async function generateMetadata(
         `${project.categoryLabel} pour ${project.client}`,
       videos: [
         {
-          url: `https://bydimeh.com${project.videoSrc}`,
-          type: 'video/mp4',
+          url: `https://vimeo.com/${project.vimeoId}`,
+          type: 'text/html',
         },
       ],
     },
@@ -55,13 +55,19 @@ export default async function ProjectPage(
 
   if (!project) notFound()
 
+  // URL Vimeo embed
+  const vimeoEmbedSrc = `https://player.vimeo.com/video/${project.vimeoId}${
+    project.vimeoHash ? `?h=${project.vimeoHash}` : ''
+  }`
+
   // JSON-LD schema.org pour le SEO
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name: `${project.title} — ${project.client}`,
     description: project.description,
-    contentUrl: `https://bydimeh.com${project.videoSrc}`,
+    embedUrl: vimeoEmbedSrc,
+    contentUrl: `https://vimeo.com/${project.vimeoId}`,
     uploadDate: `${project.year}-01-01`,
     creator: { '@type': 'Person', name: 'By Dimeh' },
   }
@@ -124,16 +130,22 @@ export default async function ProjectPage(
             </div>
           </header>
 
-          {/* Video */}
-          <div className="aspect-video w-full mb-16 bg-black">
-            <video
-              src={project.videoSrc}
-              controls
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              Votre navigateur ne prend pas en charge la lecture vidéo.
-            </video>
+          {/* Vidéo Vimeo */}
+          <div
+            className={`w-full mb-16 bg-black ${
+              project.orientation === 'vertical'
+                ? 'aspect-[9/16] max-w-md mx-auto'
+                : 'aspect-video'
+            }`}
+          >
+            <iframe
+              src={vimeoEmbedSrc}
+              className="w-full h-full"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              frameBorder="0"
+              title={`${project.title} — ${project.client}`}
+            />
           </div>
 
           {/* Description */}

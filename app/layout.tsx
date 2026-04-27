@@ -24,9 +24,6 @@ const dmMono = DM_Mono({
   display: 'swap',
 })
 
-// ============================================================================
-// SEO — Metadata par défaut, surchargée par chaque page
-// ============================================================================
 export const metadata: Metadata = {
   metadataBase: new URL('https://bydimeh.com'),
   title: {
@@ -55,8 +52,7 @@ export const metadata: Metadata = {
     url: 'https://bydimeh.com',
     siteName: 'By Dimeh',
     title: 'By Dimeh — Vidéaste',
-    description:
-      'Clips musicaux, brand films, fashion films. Une écriture visuelle ancrée dans la culture musicale.',
+    description: 'Clips musicaux, brand films, fashion films. Une écriture visuelle ancrée dans la culture musicale.',
     images: [
       {
         url: '/og-image.jpg',
@@ -102,6 +98,13 @@ export default function RootLayout({
       className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Preconnect Vimeo pour accélérer le chargement des vidéos */}
+        <link rel="preconnect" href="https://player.vimeo.com" />
+        <link rel="preconnect" href="https://i.vimeocdn.com" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" />
+        <link rel="dns-prefetch" href="https://player.vimeo.com" />
+      </head>
       <body>
         {/* JSON-LD structured data for SEO */}
         <script
@@ -114,8 +117,7 @@ export default function RootLayout({
               jobTitle: 'Vidéaste',
               url: 'https://bydimeh.com',
               sameAs: [
-                'https://instagram.com/bydimeh',
-                'https://vimeo.com/bydimeh',
+                'https://instagram.com/by.dimeh',
               ],
             }),
           }}
